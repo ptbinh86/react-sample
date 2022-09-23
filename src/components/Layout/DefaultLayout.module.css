@@ -1,0 +1,5 @@
+.layoutWrapper {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	grid-gap: 24px;
+}
