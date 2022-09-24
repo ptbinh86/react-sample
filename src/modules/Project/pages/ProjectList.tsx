@@ -1,38 +1,31 @@
-import { useProjectQuery } from '../services/ProjectService';
-import { useEffect } from 'react';
+import { getProjects } from '../services/ProjectService';
+import { useSearchParams } from 'react-router-dom';
 
-import DefaultLayout from '../../../components/Layout/DefaultLayout';
+import {
+	Fragment,
+	useEffect
+} from 'react';
+
 import ProjectFilters from '../components/ProjectFilters';
 import ProjectTable from '../components/ProjectTable';
+import useQuery from '../../../hooks/useQuery';
 
 export default function ProjectList() {
-	const {
-		data,
-		busy,
-		query
-	} = useProjectQuery()
+	const [search, setSearch] = useSearchParams();
+	const { data, isLoading, refetch: searchProject } = useQuery(
+		getProjects,
+		undefined,
+		{ enabled: false }
+	)
 
-	/**
-	 * Callback method that executes the query
-	 * when the filters' parameters are changed
-	 *
-	 * @param filters
-	 */
-	const handleSearch = (filters) => {
-		query(filters)
-	}
-
-	/**
-	 * Initial query project data
-	 */
 	useEffect(() => {
-		query();
-	}, [])
+		searchProject(Object.fromEntries(search));
+	}, [search])
 
 	return (
-		<DefaultLayout>
-			<ProjectFilters onSearch={handleSearch} disabled={busy}/>
-			<ProjectTable dataSource={data}/>
-		</DefaultLayout>
+		<Fragment>
+			<ProjectFilters onSearch={(filters) => setSearch(filters)} disabled={isLoading} />
+			<ProjectTable dataSource={data} />
+		</Fragment>
 	)
 }

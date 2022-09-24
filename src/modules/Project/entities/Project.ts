@@ -1,19 +1,5 @@
-export interface Location {
-    country: string;
-    province: string;
-    district: string;
-    wards: string;
-    address: string;
-}
-
-export interface Province {
-    id: string;
-    name: string;
-    slug: string;
-    type: string;
-    nameWithType: string;
-    thumbnail: string;
-}
+import { Province } from '../../Address/entities/Province';
+import { Location } from '../../Address/entities/Location';
 
 export interface Project {
     id: number;

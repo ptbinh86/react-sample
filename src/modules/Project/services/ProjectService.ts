@@ -1,12 +1,16 @@
-import { useState } from 'react'
 import { Project } from '../entities/Project'
-
 import {
 	get,
 	createApiUrl,
 	withParams
 } from '../../../services/HttpService'
 
+export function getProjects (params: { [key: string]: any } = {}) {
+	return get<Project[]>(withParams(createApiUrl("projects.json"), params)).then(
+		(data) => data.content
+	);
+}
+//
 export function useProjectQuery() {
 	const [busy, setBusy] = useState<boolean>(false);
 	const [errors, setErrors] = useState<boolean>(false);

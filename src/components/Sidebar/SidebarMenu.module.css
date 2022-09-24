@@ -5,8 +5,8 @@
 	text-align: left;
 }
 
-.menuItem {
-
+.menuItem:not(:first-child) {
+	margin-top: 4px;
 }
 
 .menuLink {
